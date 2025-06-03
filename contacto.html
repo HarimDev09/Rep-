@@ -49,11 +49,11 @@
             <div class="container">
                 <div class="header__wrap ul_li_between">
                     <div class="header-logo">
-                        <a href="index.html"><img src="assets/img/logo/repa-logo.png" alt=""></a>
+                        <a href="index.html"><img src="contacto.html/assets/img/logo/repa-logo.svg" alt=""></a>
                     </div>
                     
                     <div class="header-contact d-none d-md-block">
-                        <a href="contact.html" class="thm-btn thm-btn--aso thm-btn--header-black">Contáctanos
+                        <a href="contacto.html" class="thm-btn thm-btn--aso thm-btn--header-black">Contáctanos
                             <img src="assets/img/icon/sms-white-icon01.svg" alt="">
                         </a>
                     </div>
@@ -98,13 +98,13 @@
                         <div class="cs-contact-wrap cs-contact-form cd-contact-form item-contact_form">
                             <h2 class="xb-title">Envíanos un mensaje</h2>
                             <p class="xb-content">Queremos ayudarte a tener el control total de tus accesos. Escríbenos y hagamos más segura y eficiente tu operación con Rep@.</p>
-                            <form action="send-email.php" method="POST" class="contact-form">
+                            <form id="contactForm" class="contact-form">
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="input-field">
                                             <label for="text1">Nombre*</label>
                                             <div class="input-box">
-                                                <input type="text" name="text" id="text1">
+                                                <input type="text" name="text" id="text1" required>
                                             </div>
                                         </div>
                                     </div>
@@ -112,7 +112,7 @@
                                         <div class="input-field">
                                             <label for="text2">Correo*</label>
                                             <div class="input-box">
-                                                <input type="email" name="gmail" id="text2">
+                                                <input type="email" name="gmail" id="text2" required>
                                             </div>
                                         </div>
                                     </div>
@@ -120,7 +120,7 @@
                                         <div class="input-field">
                                             <label for="text3">Teléfono*</label>
                                             <div class="input-box">
-                                                <input type="tel" name="number" id="text3">
+                                                <input type="number" name="number" id="text3" required style="width: 100%;">
                                             </div>
                                         </div>
                                     </div>
@@ -134,9 +134,11 @@
                                     </div>
                                 </div>
                                 <div class="cp-det-btn mt-20 d-grid">
-                                    <button type="submit" class="cp-btn">Enviar mensaje<i class="fal fa-arrow-right"></i></button>
+                                    <button type="submit" class="cp-btn">Enviar mensaje <i class="fal fa-arrow-right"></i></button>
                                 </div>
+                                <span id="formMessage" style="margin-top: 10px; display:block;"></span>
                             </form>
+                            
                         </div>
                     </div>
                     <div class="col-lg-4 mt-30">
@@ -182,10 +184,12 @@
                             <span class="xb-item--content">¿Quieres conocer más sobre nuestras soluciones, lanzamientos o promociones especiales</span>
                             <div class="xb-item--contact mt-35">
                                 <div class="xb-item--input_field pos-rel">
-                                    <input type="email" name="gmail" id="text6" placeholder="Ingresa tu correo">
-                                    <div class="img"><img src="assets/img/icon/sms.svg" alt=""></div>
-                                </div>
-                                <button class="xb-item--button btn-effect_2">Suscribirme</button>
+                                    <form id="newsletterForm">
+                                        <input type="email" name="email" id="text6" placeholder="Ingresa tu correo" required>
+                                        <button type="submit" class="xb-item--button btn-effect_2">Suscribirme</button>
+                                    </form>
+                                <span id="responseMessage" class="xb-item--text"></span>
+                            </div>
                                 <span class="xb-item--text">Sin spam. Solo contenido útil para mejorar la seguridad y el control de tu inmueble</span>
                             </div>
                         </div>
@@ -214,7 +218,7 @@
                 </div>
             </div>
             <!-- <div class="footer-bottom pos-rel bg_img o-hidden" data-background="assets/img/bg/footer-glassisom.png">
-                <a href="contact.html" class="title marquee-left" data-cursor-text="say hi!">Let’s discuss today Are you interested</a>
+                <a href="contacto.html" class="title marquee-left" data-cursor-text="say hi!">Let’s discuss today Are you interested</a>
             </div> -->
         </footer> 
         <!-- footer end -->
@@ -241,7 +245,57 @@
 <script src="assets/js/jquery.marquee.min.js"></script>
 <script src="assets/js/jquery.magnific-popup.min.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/script.js"></script>
 
+<script>
+    document.getElementById("contactForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+    
+        const nombre = document.getElementById("text1").value.trim();
+        const correo = document.getElementById("text2").value.trim();
+        const telefono = document.getElementById("text3").value.trim();
+        const mensaje = document.getElementById("text5").value.trim();
+        const formMessage = document.getElementById("formMessage");
+    
+        // Validación básica
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!nombre || !correo || !telefono) {
+            formMessage.textContent = "Por favor, completa todos los campos obligatorios.";
+            formMessage.style.color = "red";
+            return;
+        }
+        if (!emailRegex.test(correo)) {
+            formMessage.textContent = "Por favor, ingresa un correo válido.";
+            formMessage.style.color = "red";
+            return;
+        }
+    
+        // Enviar usando fetch
+        const formData = new URLSearchParams();
+        formData.append("text", nombre);
+        formData.append("gmail", correo);
+        formData.append("number", telefono);
+        formData.append("massage", mensaje);
+    
+        fetch("send-email.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: formData.toString()
+        })
+        .then(response => response.text())
+        .then(data => {
+            formMessage.textContent = data;
+            formMessage.style.color = "green";
+            document.getElementById("contactForm").reset();
+        })
+        .catch(error => {
+            console.error(error);
+            formMessage.textContent = "Ocurrió un error al enviar el mensaje.";
+            formMessage.style.color = "red";
+        });
+    });
+    </script>
+    
 </body>
 
 </html>

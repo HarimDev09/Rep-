@@ -49,11 +49,11 @@
             <div class="container">
                 <div class="header__wrap ul_li_between">
                     <div class="header-logo">
-                        <a href="index.html"><img src="assets/img/logo/repa-logo.png" alt=""></a>
+                        <a href="index.html"><img src="contacto.html/assets/img/logo/repa-logo.svg" alt=""></a>
                     </div>
                     
                     <div class="header-contact d-none d-md-block">
-                        <a href="contact.html" class="thm-btn thm-btn--aso thm-btn--header-black">Contáctanos
+                        <a href="contacto.html" class="thm-btn thm-btn--aso thm-btn--header-black">Contáctanos
                             <img src="assets/img/icon/sms-white-icon01.svg" alt="">
                         </a>
                     </div>
@@ -233,10 +233,12 @@
                             <span class="xb-item--content">¿Quieres conocer más sobre nuestras soluciones, lanzamientos o promociones especiales</span>
                             <div class="xb-item--contact mt-35">
                                 <div class="xb-item--input_field pos-rel">
-                                    <input type="email" name="gmail" id="text6" placeholder="Ingresa tu correo">
-                                    <div class="img"><img src="assets/img/icon/sms.svg" alt=""></div>
-                                </div>
-                                <button class="xb-item--button btn-effect_2">Suscribirme</button>
+                                    <form id="newsletterForm">
+                                        <input type="email" name="email" id="text6" placeholder="Ingresa tu correo" required>
+                                        <button type="submit" class="xb-item--button btn-effect_2">Suscribirme</button>
+                                    </form>
+                                <span id="responseMessage" class="xb-item--text"></span>
+                            </div>
                                 <span class="xb-item--text">Sin spam. Solo contenido útil para mejorar la seguridad y el control de tu inmueble</span>
                             </div>
                         </div>
@@ -265,7 +267,7 @@
                 </div>
             </div>
             <!-- <div class="footer-bottom pos-rel bg_img o-hidden" data-background="assets/img/bg/footer-glassisom.png">
-                <a href="contact.html" class="title marquee-left" data-cursor-text="say hi!">Let’s discuss today Are you interested</a>
+                <a href="contacto.html" class="title marquee-left" data-cursor-text="say hi!">Let’s discuss today Are you interested</a>
             </div> -->
         </footer> 
         <!-- footer end -->
@@ -292,6 +294,8 @@
 <script src="assets/js/jquery.marquee.min.js"></script>
 <script src="assets/js/jquery.magnific-popup.min.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/script.js"></script>
+
 
 </body>
 
